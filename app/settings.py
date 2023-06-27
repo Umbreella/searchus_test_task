@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     DATABASE_URL_USER: str
     DATABASE_URL_PASSWORD: str
     DATABASE_URL_DB: str
+    ELASTICSEARCH_URL: str
+    ELASTICSEARCH_DOCS_INDEX: str
 
     class Config:
         env_file = os.getenv('ENV_FILE')

@@ -10,6 +10,11 @@ from app.app import get_asgi_application
 from app.settings import settings
 from services.async_database import async_database, get_db
 
+from .filling_database import clear_elasticsearch, filling_docs
+
+clear_elasticsearch = clear_elasticsearch
+filling_docs = filling_docs
+
 
 @pytest.fixture(autouse=True)
 def app():
