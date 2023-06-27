@@ -22,9 +22,15 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
       elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
         env:
           discovery.type: single-node
+          cluster.name: docker-cluster
+          network.host: 0.0.0.0
+          xpack.security.enabled: false
+          xpack.monitoring.collection.enabled: true
+          indices.query.bool.max_clause_count: 100000
+          ES_JAVA_OPTS: -Xmx4096m -Xms1024m
         ports:
           - 9200:9200
         options: --health-cmd "curl http://localhost:9200/_cluster/health" --health-interval 10s --health-timeout 5s --health-retries 10
