@@ -1,5 +1,4 @@
 import asyncio
-from datetime import datetime
 from typing import List
 
 from pydantic import parse_obj_as
@@ -95,21 +94,24 @@ async def test_When_CallSearchWithFoundText_Should_ReturnDataFromPostgres(
     await asyncio.sleep(1)
 
     async with async_database.session() as db, db.begin():
-        search_docs_orm = await tested_class.elastic_search('test_text', db)
+        search_docs_orm = await tested_class.elastic_search('text', db)
         search_docs = parse_obj_as(List[DocSchemaOut], search_docs_orm)
 
-    expected_docs = {
-        'id': 2,
-        'text': 'test_text',
-        'rubrics': [
-            'test_rubric',
-            'test_rubric',
-        ],
-    }
-    real_docs = search_docs[0].dict()
-
-    expected_created_date = datetime.utcnow().strftime(date_format)
-    real_created_date = real_docs.pop('created_date').strftime(date_format)
+    expected_docs = [2, 1, ]
+    real_docs = [doc.id for doc in search_docs]
 
     assert expected_docs == real_docs
-    assert expected_created_date == real_created_date
+
+
+async def test_When_CallSearchWithManyData_Should_ReturnOnlyFirst20Docs(
+        filling_many_docs,
+):
+    await asyncio.sleep(1)
+
+    async with async_database.session() as db, db.begin():
+        search_docs_orm = await tested_class.elastic_search('text', db)
+
+    expected_len_docs = 20
+    real_len_docs = len(search_docs_orm)
+
+    assert expected_len_docs == real_len_docs

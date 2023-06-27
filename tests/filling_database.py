@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import pytest
 
 from app.settings import settings
@@ -22,6 +24,7 @@ async def filling_docs(clear_elasticsearch):
         await DocModel.create(**{
             'data': DocSchemaIn(**{
                 'text': 'text',
+                'created_date': datetime.utcnow() - timedelta(days=2),
                 'rubrics': [
                     'rubric',
                     'rubric',
@@ -31,7 +34,8 @@ async def filling_docs(clear_elasticsearch):
         })
         await DocModel.create(**{
             'data': DocSchemaIn(**{
-                'text': 'test_text',
+                'text': 'text',
+                'created_date': datetime.utcnow() - timedelta(days=1),
                 'rubrics': [
                     'test_rubric',
                     'test_rubric',
@@ -39,3 +43,19 @@ async def filling_docs(clear_elasticsearch):
             }),
             'db': db,
         })
+
+
+@pytest.fixture
+async def filling_many_docs(clear_elasticsearch):
+    async with async_database.session() as db, db.begin():
+        for _ in range(21):
+            await DocModel.create(**{
+                'data': DocSchemaIn(**{
+                    'text': 'text',
+                    'created_date': datetime.utcnow() - timedelta(days=2),
+                    'rubrics': [
+                        'rubric', 'rubric',
+                    ],
+                }),
+                'db': db,
+            })

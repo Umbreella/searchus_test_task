@@ -73,7 +73,7 @@ class DocModel(BASE):
 
         query = select(cls).where(
             cls.id.in_(search_ids)
-        ).order_by(cls.created_date)
+        ).order_by(cls.created_date.desc())
 
         rows = await db.execute(query)
 
