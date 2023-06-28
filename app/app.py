@@ -36,6 +36,7 @@ def get_asgi_application(skip_init_db=False):
         'debug': True,
         'lifespan': lifespan,
         'docs_url': '/api/docs/',
+        'openapi_url': '/api/docs/json/',
     })
 
     add_routers(app)

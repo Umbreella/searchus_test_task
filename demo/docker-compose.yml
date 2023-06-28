@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  fast_api:
-    build: .
-    container_name: fast_api
+  fastapi_demo:
+    image: umbreella/elasticsearch_test_task:latest
+    container_name: fastapi_demo
     environment:
-      ENV_FILE: .env.example
+      ENV_FILE: demo/.env.example
     ports:
-      - 8888:8000
+      - 8000:8000
 
   postgres:
     image: postgres:14
@@ -16,8 +16,6 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - 5555:5432
 
   elasticsearch:
     image: elasticsearch:8.8.0
@@ -30,5 +28,3 @@ services:
       xpack.monitoring.collection.enabled: true
       indices.query.bool.max_clause_count: 100000
       ES_JAVA_OPTS: -Xmx4096m -Xms1024m
-    ports:
-      - 9292:9200
