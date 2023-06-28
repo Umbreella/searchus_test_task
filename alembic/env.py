@@ -1,6 +1,4 @@
 import asyncio
-import platform
-from asyncio import WindowsSelectorEventLoopPolicy
 from logging.config import fileConfig
 
 from sqlalchemy import pool
@@ -9,9 +7,6 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 from app.settings import settings
-
-if platform.system() == 'Windows':
-    asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
 config = context.config
 
