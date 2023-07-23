@@ -1,8 +1,11 @@
 [flake8]
+inline-quotes = single
+
 exclude =
     .git,
     __pycache__,
     alembic/*,
     venv/*,
+    load_demo.py,
 
 max-complexity = 10
