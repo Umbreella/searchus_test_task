@@ -47,13 +47,13 @@ Completed items:
 version: "3"
 
 services:
-    elasticsearch_test_task:
-        image: umbreella/elasticsearch_test_task:latest
-        container_name: elasticsearch_test_task
+    searchus_test_task:
+        image: umbreella/searchus_test_task:latest
+        container_name: searchus_test_task
     environment:
-        ENV_FILE: [env_file]
+        - ENV_FILE=.env
     volumes:
-        - [env_file]:/usr/src/app/[env_file]
+        - [env_file]:/usr/src/app/.env
     ports:
         - [your_open_port]:8000
 ```
@@ -67,7 +67,7 @@ docker-compose up -d
 * Open bash in container
 
 ```commandline
-docker exec --it elasticsearch_test_task bash
+docker exec --it searchus_test_task bash
 ```
 
 * Run commands
@@ -112,4 +112,4 @@ $ python3 load_demo.py
 
 ## Live Demo
 
-* [https://elastic.umbreella-dev.ru/](https://elastic.umbreella-dev.ru/api/docs/)
+* [https://searchus.umbreella-dev.ru/](https://searchus.umbreella-dev.ru/api/docs/)

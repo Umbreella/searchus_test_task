@@ -2,7 +2,7 @@ version: '3'
 
 services:
   fastapi_demo:
-    image: umbreella/elasticsearch_test_task:latest
+    image: umbreella/searchus_test_task:latest
     container_name: fastapi_demo
     environment:
       ENV_FILE: demo/.env.example
