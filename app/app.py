@@ -6,6 +6,7 @@ from fastapi_pagination import add_pagination
 from app.settings import settings
 from services.async_database import async_database
 
+from .openapi import OpenapiSchema
 from .routers import add_routers
 
 
@@ -40,5 +41,6 @@ def get_asgi_application(skip_init_db=False):
     })
 
     add_routers(app)
+    app.openapi = OpenapiSchema(app)
 
     return add_pagination(app)
